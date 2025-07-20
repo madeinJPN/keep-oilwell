@@ -1,5 +1,6 @@
 Targets = {}
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
+local Target = Compat.GetTarget()
 
 local loaded = false
 local PED = nil
@@ -72,7 +73,7 @@ local function makeCore()
           local vec3_coord = vector3(c.x, c.y, c.z)
           PED = spawn_ped(Oilwell_config.TruckWithdraw.npc)
 
-          exports['qb-target']:AddBoxZone("keep_oilwell_withdraw_truck_target", vec3_coord,
+          Target:AddBoxZone("keep_oilwell_withdraw_truck_target", vec3_coord,
                Oilwell_config.TruckWithdraw.box.l,
                Oilwell_config.TruckWithdraw.box.w,
                {
@@ -104,7 +105,7 @@ AddEventHandler('keep-oilwell:client:refund_truck', function(data)
      local plate = data.vehiclePlate
 
      if #(coord - spawnLocation) > 5.0 then
-          QBCore.Functions.Notify('You are not close to truck refunding area', "primary")
+          Compat.Notify('You are not close to truck refunding area', "primary")
           return
      end
      QBCore.Functions.TriggerCallback('keep-oilwell:server:refund_truck', function(result)

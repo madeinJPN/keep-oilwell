@@ -3,10 +3,11 @@ games { 'gta5' }
 
 author "Swkeep#7049"
 
-shared_script { 'config.lua', 'shared/shared_main.lua' }
+shared_script { 'config.lua', 'shared/compat.lua', 'shared/shared_main.lua' }
 
 client_scripts {
      '@menuv/menuv.lua',
+     'client/compat_client.lua',
      'client/client.lua',
      'client/client_lib/client_lib_entry.lua',
      'client/client_lib/menu/CDU_menu.lua',

@@ -1,4 +1,5 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
+local Target = Compat.GetTarget()
 
 function isOwner(entity)
      local oilrig = OilRigs:getByEntityHandle(entity)
@@ -131,7 +132,7 @@ function replaceString(o)
 end
 
 function createOwnerQbTarget(hash, coord)
-     exports['qb-target']:RemoveZone("oil-rig-" .. hash)
+     Target:RemoveZone("oil-rig-" .. hash)
      Targets.qb_target.oilwell(coord, hash)
 end
 
@@ -139,7 +140,7 @@ RegisterNetEvent('keep-oilwell:client:remove_oilwell', function(data)
      local oilwell = OilRigs:getByEntityHandle(data.entity)
      for i = 1, 3, 1 do
           local value = RandomHash(4)
-          local inputData = exports['qb-input']:ShowInput({
+          local inputData = Compat.ShowInput({
                header = 'Enter This Values (' .. value .. ')',
                inputs = {
                     {
@@ -151,11 +152,11 @@ RegisterNetEvent('keep-oilwell:client:remove_oilwell', function(data)
                }
           })
           if not inputData then
-               QBCore.Functions.Notify('Canceled', "primary")
+               Compat.Notify('Canceled', "primary")
                return
           end
           if inputData.RandomHash ~= value then
-               QBCore.Functions.Notify('Failed', "primary")
+               Compat.Notify('Failed', "primary")
                return
           end
      end

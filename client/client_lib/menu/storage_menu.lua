@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
 
 local function showStorage(storage_data)
      local header = storage_data.name
@@ -55,11 +55,11 @@ local function showStorage(storage_data)
           header = 'leave',
           icon = 'fa-solid fa-circle-xmark',
           params = {
-               event = "qb-menu:closeMenu"
+               event = "keep-oilwell:compatCloseMenu"
           }
      }
 
-     exports['qb-menu']:openMenu(openMenu)
+     Compat.OpenMenu(openMenu)
 end
 
 local function showStorageActions(data)
@@ -96,7 +96,7 @@ local function showStorageActions(data)
           }
      }
 
-     exports['qb-menu']:openMenu(openMenu)
+     Compat.OpenMenu(openMenu)
 end
 
 local function showStorageWithdraw(data)
@@ -150,7 +150,7 @@ local function showStorageWithdraw(data)
                }
           }
      }
-     exports['qb-menu']:openMenu(openMenu)
+     Compat.OpenMenu(openMenu)
 end
 
 MakeVehicle = function(model, Coord, TriggerLocation, DinstanceToTrigger, items)
@@ -242,7 +242,7 @@ AddEventHandler('keep-oilrig:storage_menu:StorageWithdraw', function(data)
 end)
 
 AddEventHandler('keep-oilrig:storage_menu:Callback', function(data)
-     local inputData = exports['qb-input']:ShowInput({
+     local inputData = Compat.ShowInput({
           header = "Enter withdraw value",
           submitText = "Confirm",
           inputs = {
@@ -295,11 +295,11 @@ local function purge_menu()
                header = 'Cancel',
                icon = 'fa-solid fa-circle-xmark',
                params = {
-                    event = "qb-menu:closeMenu"
+                    event = "keep-oilwell:compatCloseMenu"
                }
           }
      }
-     exports['qb-menu']:openMenu(openMenu)
+     Compat.OpenMenu(openMenu)
 end
 
 AddEventHandler('keep-oilwell:client:open_purge_menu', function()
@@ -309,7 +309,7 @@ end)
 local purge_conf = 0
 AddEventHandler('keep-oilwell:client:purgeWithdrawStash', function()
      if purge_conf == 0 then
-          QBCore.Functions.Notify('Try again to confirm Purge! (confirmation will reset in 5sec)', "primary")
+          Compat.Notify('Try again to confirm Purge! (confirmation will reset in 5sec)', "primary")
           purge_conf = purge_conf + 1
           SetTimeout(5000, function()
                purge_conf = 0

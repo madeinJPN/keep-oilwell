@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
 local vehicles = {}
 
 RegisterNetEvent('keep-oilwell:server_lib:update_vehicle', function(vehiclePlate, items)
@@ -6,8 +6,8 @@ RegisterNetEvent('keep-oilwell:server_lib:update_vehicle', function(vehiclePlate
      if not vehicles[src] then
           vehicles[src] = {}
      end
-     vehicles[src][vehiclePlate] = vehiclePlate
-     exports['qb-inventory']:addTrunkItems(vehiclePlate, items)
+    vehicles[src][vehiclePlate] = vehiclePlate
+    Compat.AddTrunkItems(vehiclePlate, items, src)
 end)
 
 QBCore.Functions.CreateCallback('keep-oilwell:server:refund_truck', function(source, cb, vehiclePlate)

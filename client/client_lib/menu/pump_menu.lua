@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
 
 local function showInfo(data)
      QBCore.Functions.TriggerCallback('keep-oilwell:server:oilwell_metadata', function(selected_oilrig)
@@ -66,12 +66,12 @@ local function showInfo(data)
                     header = 'leave',
                     icon = 'fa-solid fa-circle-xmark',
                     params = {
-                         event = "qb-menu:closeMenu"
+                         event = "keep-oilwell:compatCloseMenu"
                     }
                }
           }
 
-          exports['qb-menu']:openMenu(openMenu)
+          Compat.OpenMenu(openMenu)
      end, data.oilrig_hash)
 end
 
@@ -124,16 +124,16 @@ RegisterNetEvent('keep-oilwell:menu:ManageEmployees', function(oilrig_hash)
                header = 'leave',
                icon = 'fa-solid fa-circle-xmark',
                params = {
-                    event = "qb-menu:closeMenu"
+                    event = "keep-oilwell:compatCloseMenu"
                }
           }
 
-          exports['qb-menu']:openMenu(Menu)
+          Compat.OpenMenu(Menu)
      end, oilrig_hash)
 end)
 
 RegisterNetEvent('keep-oilwell:client:add_employee', function(data)
-     local inputData = exports['qb-input']:ShowInput({
+     local inputData = Compat.ShowInput({
           header = 'Enter Employee State Id',
           inputs = {
                {
@@ -187,11 +187,11 @@ RegisterNetEvent('keep-oilwell:menu:remove_employee', function(data)
           header = 'Cancel',
           icon = 'fa-solid fa-circle-xmark',
           params = {
-               event = "qb-menu:closeMenu"
+               event = "keep-oilwell:compatCloseMenu"
           }
      }
 
-     exports['qb-menu']:openMenu(Menu)
+     Compat.OpenMenu(Menu)
 end)
 
 RegisterNetEvent('keep-oilwell:menu:fire_employee', function(data)
@@ -242,12 +242,12 @@ local function show_oilwell_stash(data)
                     header = 'leave',
                     icon = 'fa-solid fa-circle-xmark',
                     params = {
-                         event = "qb-menu:closeMenu"
+                         event = "keep-oilwell:compatCloseMenu"
                     }
                }
           }
 
-          exports['qb-menu']:openMenu(openMenu)
+          Compat.OpenMenu(openMenu)
      end, data.oilrig_hash)
 end
 

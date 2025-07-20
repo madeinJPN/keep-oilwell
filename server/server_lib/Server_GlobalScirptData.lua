@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
 
 GlobalScirptData = {
      oldTable = { 'deepcopy of oil_well' },
@@ -239,9 +239,8 @@ local function blender_calculations(blender)
      if storage == false then
           -- failsafe
           local player = QBCore.Functions.GetPlayerByCitizenId(blender.citizenid)
-          TriggerClientEvent('QBCore:Notify', player.PlayerData.source, "Fetal error could not coonect to your storage!"
-               , 'error')
-          TriggerClientEvent('QBCore:Notify', player.PlayerData.source, "Fail-safe triggerd shuting down!", 'primary')
+          Compat.ServerNotify(player.PlayerData.source, 'Fetal error could not coonect to your storage!', 'error')
+          Compat.ServerNotify(player.PlayerData.source, 'Fail-safe triggerd shuting down!', 'primary')
           blender.metadata.state = false
           return
      end
@@ -338,8 +337,8 @@ local function CDUs_calculations(CDU)
                -- CUD's failsafe
                local player = QBCore.Functions.GetPlayerByCitizenId(CDU.citizenid)
                local source = player.PlayerData.source
-               TriggerClientEvent('QBCore:Notify', source, "Fetal error could not coonect to your blender!", 'error')
-               TriggerClientEvent('QBCore:Notify', source, "Fail-safe triggerd shuting down!", 'primary')
+               Compat.ServerNotify(source, 'Fetal error could not coonect to your blender!', 'error')
+               Compat.ServerNotify(source, 'Fail-safe triggerd shuting down!', 'primary')
                CDU.metadata.state = false
                return
           end
@@ -379,7 +378,7 @@ local function oilwell_calculations(oil_well)
                oil_well.metadata.part_info.belt = 0
                oil_well.metadata.speed = 0
                local player = QBCore.Functions.GetPlayerByCitizenId(oil_well.citizenid)
-               TriggerClientEvent('QBCore:Notify', player.PlayerData.source, 'Shuting down (broken belt)', 'error')
+               Compat.ServerNotify(player.PlayerData.source, 'Shuting down (broken belt)', 'error')
                TriggerClientEvent('keep-oilrig:client:syncSpeed', -1, oil_well.id, 0)
           end
 
@@ -390,7 +389,7 @@ local function oilwell_calculations(oil_well)
                oil_well.metadata.part_info.polish = 0
                oil_well.metadata.speed            = 0
                local player                       = QBCore.Functions.GetPlayerByCitizenId(oil_well.citizenid)
-               TriggerClientEvent('QBCore:Notify', player.PlayerData.source, 'Shuting down (polish value reached zero)',
+               Compat.ServerNotify(player.PlayerData.source, 'Shuting down (polish value reached zero)', 'error')
                     'error')
                TriggerClientEvent('keep-oilrig:client:syncSpeed', -1, oil_well.id, 0)
           end
@@ -402,7 +401,7 @@ local function oilwell_calculations(oil_well)
                oil_well.metadata.part_info.clutch = 0
                oil_well.metadata.speed = 0
                local player = QBCore.Functions.GetPlayerByCitizenId(oil_well.citizenid)
-               TriggerClientEvent('QBCore:Notify', player.PlayerData.source, 'Shuting down (broken clutch)', 'error')
+               Compat.ServerNotify(player.PlayerData.source, 'Shuting down (broken clutch)', 'error')
                TriggerClientEvent('keep-oilrig:client:syncSpeed', -1, oil_well.id, 0)
           end
 
@@ -443,17 +442,17 @@ function SendOilToStorage(oilrig, src, cb)
                citizenid = oilrig.citizenid,
                name = "'s storage",
           })
-          TriggerClientEvent('QBCore:Notify', src, "Could not connect to your stroage try again!", 'error')
+          Compat.ServerNotify(src, 'Could not connect to your stroage try again!', 'error')
           cb(false)
           return
      end
      -- add to storage
      if not storage then
-          TriggerClientEvent('QBCore:Notify', src, "Could not connect to your stroage try again!", 'error')
+          Compat.ServerNotify(src, 'Could not connect to your stroage try again!', 'error')
           return
      end
      storage.metadata.crudeOil = Round(storage.metadata.crudeOil + oilrig.metadata.oil_storage, 2)
-     TriggerClientEvent('QBCore:Notify', src, oilrig.metadata.oil_storage .. " Gallon of Curde Oil pumped to storage")
+     Compat.ServerNotify(src, oilrig.metadata.oil_storage .. ' Gallon of Curde Oil pumped to storage')
      -- remove from oilwell
      oilrig.metadata.oil_storage = 0.0
      cb(true)
@@ -469,13 +468,13 @@ function SendOilFuelToStorage(player, src, cb)
                citizenid = citizenid,
                name = player.PlayerData.name .. "'s storage",
           })
-          TriggerClientEvent('QBCore:Notify', src, "Could not connect to your stroage try again!", 'error')
+          Compat.ServerNotify(src, 'Could not connect to your stroage try again!', 'error')
           cb(false)
           return
      end
 
      if not blender then
-          TriggerClientEvent('QBCore:Notify', src, "Could not connect to your blender try again!", 'error')
+          Compat.ServerNotify(src, 'Could not connect to your blender try again!', 'error')
           cb(false)
           return
      end
@@ -489,12 +488,12 @@ function SendOilFuelToStorage(player, src, cb)
      end
 
      if blender.metadata.fuel_oil == 0 then
-          TriggerClientEvent('QBCore:Notify', src, "You don't have any fuel oil!", 'error')
+          Compat.ServerNotify(src, 'You do not have any fuel oil!', 'error')
           return
      end
      -- add to storage
      storage.metadata.fuel_oil = Round((storage.metadata.fuel_oil + blender.metadata.fuel_oil), 2)
-     TriggerClientEvent('QBCore:Notify', src, blender.metadata.fuel_oil .. " Gallon of fuel oil pumped to storage")
+     Compat.ServerNotify(src, blender.metadata.fuel_oil .. ' Gallon of fuel oil pumped to storage')
      -- remove from oilwell
      blender.metadata.fuel_oil = 0.0
      cb(true)

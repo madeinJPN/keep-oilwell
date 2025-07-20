@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
 
 local function showblender(data)
      local state = ''
@@ -104,11 +104,11 @@ local function showblender(data)
           header = 'leave',
           icon = 'fa-solid fa-circle-xmark',
           params = {
-               event = "qb-menu:closeMenu"
+               event = "keep-oilwell:compatCloseMenu"
           }
      }
 
-     exports['qb-menu']:openMenu(openMenu)
+     Compat.OpenMenu(openMenu)
 end
 
 AddEventHandler('keep-oilrig:blender_menu:pump_fueloil', function()
@@ -134,7 +134,7 @@ local function inRange(x, min, max)
 end
 
 AddEventHandler('keep-oilrig:blender_menu:recipe_blender', function()
-     local inputData = exports['qb-input']:ShowInput({
+     local inputData = Compat.ShowInput({
           header = "Pump crude oil to CDU",
           submitText = "Enter",
           inputs = {
@@ -187,7 +187,7 @@ AddEventHandler('keep-oilrig:blender_menu:recipe_blender', function()
 
           for _, value in pairs(inputData) do
                if not inRange(tonumber(value), 0, 100) then
-                    QBCore.Functions.Notify('numbers must be between 0-100', "primary")
+                    Compat.Notify('numbers must be between 0-100', "primary")
                     return
                end
           end

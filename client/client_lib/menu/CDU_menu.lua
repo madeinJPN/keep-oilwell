@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
 
 local function showCDU(data)
      if not data then return end
@@ -52,11 +52,11 @@ local function showCDU(data)
                header = 'leave',
                icon = 'fa-solid fa-circle-xmark',
                params = {
-                    event = "qb-menu:closeMenu"
+                    event = "keep-oilwell:compatCloseMenu"
                }
           }
      }
-     exports['qb-menu']:openMenu(openMenu)
+     Compat.OpenMenu(openMenu)
 end
 
 AddEventHandler('keep-oilrig:CDU_menu:ShowCDU', function()
@@ -72,7 +72,7 @@ AddEventHandler('keep-oilrig:CDU_menu:switchPower_of_CDU', function()
 end)
 
 AddEventHandler('keep-oilrig:CDU_menu:set_CDU_temp', function()
-     local inputData = exports['qb-input']:ShowInput({
+     local inputData = Compat.ShowInput({
           header = "CDU Temperature",
           submitText = "Assign new temperature",
           inputs = { {
@@ -94,7 +94,7 @@ AddEventHandler('keep-oilrig:CDU_menu:set_CDU_temp', function()
 end)
 
 AddEventHandler('keep-oilrig:CDU_menu:pumpCrudeOil_to_CDU', function()
-     local inputData = exports['qb-input']:ShowInput({
+     local inputData = Compat.ShowInput({
           header = "Pump crude oil to CDU",
           submitText = "Enter",
           inputs = { {
@@ -112,7 +112,7 @@ AddEventHandler('keep-oilrig:CDU_menu:pumpCrudeOil_to_CDU', function()
           end
 
           if inputData.amount <= 0 then
-               QBCore.Functions.Notify('Amount must be more than 0', "error")
+               Compat.Notify('Amount must be more than 0', "error")
                return
           end
           QBCore.Functions.TriggerCallback('keep-oilrig:server:pumpCrudeOil_to_CDU', function(result)

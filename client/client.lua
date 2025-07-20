@@ -1,4 +1,5 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
+local Target = Compat.GetTarget()
 
 PlayerJob = {}
 OnDuty = nil
@@ -162,11 +163,11 @@ end
 --
 RegisterNetEvent('keep-oilrig:client:changeRigSpeed', function(qbtarget)
      if not CheckJob() then
-          QBCore.Functions.Notify('You not a hired by oil company', "error")
+          Compat.Notify('You not a hired by oil company', "error")
           return false
      end
      if not CheckOnduty() then
-          QBCore.Functions.Notify('You must be on duty!', "error")
+          Compat.Notify('You must be on duty!', "error")
           return false
      end
      local rig = OilRigs:getByEntityHandle(qbtarget.entity)
@@ -176,7 +177,7 @@ RegisterNetEvent('keep-oilrig:client:changeRigSpeed', function(qbtarget)
      QBCore.Functions.TriggerCallback('keep-oilwell:server:oilwell_metadata', function(metadata)
           OilRigs:startUpdate(function()
 
-               local inputData = exports['qb-input']:ShowInput({
+               local inputData = Compat.ShowInput({
                     header = "Change oil rig speed",
                     submitText = "change",
                     inputs = {
@@ -194,10 +195,10 @@ RegisterNetEvent('keep-oilrig:client:changeRigSpeed', function(qbtarget)
                          return
                     end
                     if not (0 <= speed and speed <= 100) then
-                         QBCore.Functions.Notify('speed must be between 0 to 100', "error")
+                         Compat.Notify('speed must be between 0 to 100', "error")
                          return
                     end
-                    QBCore.Functions.Notify('oilwell speed changed to ' .. speed, "success")
+                    Compat.Notify('oilwell speed changed to ' .. speed, "success")
                     TriggerServerEvent('keep-oilrig:server:updateSpeed', inputData, rig.id)
                end
           end)
@@ -246,7 +247,7 @@ AddEventHandler('keep-oilrig:client:spawn', function()
           if NetId ~= nil then
                local entity = NetworkGetEntityFromNetworkId(NetId)
                OBJECT = entity
-               exports['qb-target']:AddEntityZone("oil-rig-" .. entity, entity, {
+               Target:AddEntityZone("oil-rig-" .. entity, entity, {
                     name = "oil-rig-" .. entity,
                     heading = GetEntityHeading(entity),
                     debugPoly = false,
@@ -260,12 +261,12 @@ AddEventHandler('keep-oilrig:client:spawn', function()
                               canInteract = function(entity)
                                    if not CheckJob() then return false end
                                    if not (PlayerJob.grade.level == 4) then
-                                        TriggerEvent('QBCore:Notify', 'You must be on duty!', "error")
+                                        Compat.Notify, 'You must be on duty!', "error")
                                         Wait(2000)
                                         return false
                                    end
                                    if not CheckOnduty() then
-                                        TriggerEvent('QBCore:Notify', 'You must be on duty!', "error")
+                                        Compat.Notify, 'You must be on duty!', "error")
                                         Wait(2000)
                                         return false
                                    end
@@ -279,17 +280,17 @@ AddEventHandler('keep-oilrig:client:spawn', function()
                               label = "Adjust position",
                               canInteract = function(entity)
                                    if not CheckJob() then
-                                        TriggerEvent('QBCore:Notify', 'Only CEO have access to this', "error")
+                                        Compat.Notify, 'Only CEO have access to this', "error")
                                         Wait(2000)
                                         return false
                                    end
                                    if not (PlayerJob.grade.level == 4) then
-                                        TriggerEvent('QBCore:Notify', 'Only CEO have access to this', "error")
+                                        Compat.Notify, 'Only CEO have access to this', "error")
                                         Wait(2000)
                                         return false
                                    end
                                    if not CheckOnduty() then
-                                        TriggerEvent('QBCore:Notify', 'You must be on duty!', "error")
+                                        Compat.Notify, 'You must be on duty!', "error")
                                         Wait(2000)
                                         return false
                                    end
@@ -305,7 +306,7 @@ end)
 
 
 RegisterNetEvent('keep-oilrig:client:enterInformation', function(qbtarget)
-     local inputData = exports['qb-input']:ShowInput({
+     local inputData = Compat.ShowInput({
           header = "Assign oil rig: ",
           submitText = "Assign",
           inputs = { {
@@ -333,7 +334,7 @@ RegisterNetEvent('keep-oilrig:client:enterInformation', function(qbtarget)
                DeleteEntity(qbtarget.entity)
                if result == true then
                     Wait(1500)
-                    QBCore.Functions.Notify('Registering oilwell to: ' .. inputData.cid, "success")
+                    Compat.Notify('Registering oilwell to: ' .. inputData.cid, "success")
                     loadData()
                end
           end, inputData)
