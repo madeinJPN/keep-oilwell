@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
 
 local function show_transport_menu()
 
@@ -30,12 +30,12 @@ local function show_transport_menu()
                header = 'leave',
                icon = 'fa-solid fa-circle-xmark',
                params = {
-                    event = "qb-menu:closeMenu"
+                    event = "keep-oilwell:compatCloseMenu"
                }
           }
      }
 
-     exports['qb-menu']:openMenu(openMenu)
+     Compat.OpenMenu(openMenu)
 end
 
 AddEventHandler('keep-oilwell:menu:show_transport_menu', function()
@@ -137,7 +137,7 @@ local function end_barell_animaiton()
 end
 
 AddEventHandler('keep-oilwell:menu:show_transport_menu:ask_to_sell_amount', function()
-     local inputData = exports['qb-input']:ShowInput({
+     local inputData = Compat.ShowInput({
           header = "Enter number of Barrels",
           submitText = "Sell",
           inputs = {

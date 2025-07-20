@@ -1,4 +1,5 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = Compat.GetCore()
+local Target = Compat.GetTarget()
 local debugPoly = true
 
 Targets['qb_target'] = {}
@@ -6,7 +7,7 @@ Targets['qb_target'] = {}
 function Targets.qb_target.storage(coords, name)
     local tmp_coord = vector3(coords.x, coords.y, coords.z + 2)
 
-    exports['qb-target']:AddCircleZone(name, tmp_coord, 1, {
+    Target:AddCircleZone(name, tmp_coord, 1, {
         name = name,
         debugPoly = debugPoly,
         useZ = true
@@ -20,7 +21,7 @@ function Targets.qb_target.storage(coords, name)
                 canInteract = function(entity)
                     if not CheckJob() then return false end
                     if not CheckOnduty() then
-                        QBCore.Functions.Notify('You must be on duty!', "error")
+                        Compat.Notify('You must be on duty!', "error")
                         Wait(2000)
                         return false
                     end
@@ -35,7 +36,7 @@ end
 function Targets.qb_target.distillation(coords, name)
     local tmp_coord = vector3(coords.x, coords.y, coords.z + 1.1)
 
-    exports['qb-target']:AddCircleZone(name, tmp_coord, 1.2, {
+    Target:AddCircleZone(name, tmp_coord, 1.2, {
         name = name,
         debugPoly = debugPoly,
         useZ = true
@@ -49,7 +50,7 @@ function Targets.qb_target.distillation(coords, name)
                 canInteract = function(entity)
                     if not CheckJob() then return false end
                     if not CheckOnduty() then
-                        QBCore.Functions.Notify('You must be on duty!', "error")
+                        Compat.Notify('You must be on duty!', "error")
                         Wait(2000)
                         return false
                     end
@@ -64,7 +65,7 @@ end
 function Targets.qb_target.toggle_job(coords, name)
     local tmp_coord = vector3(coords.x, coords.y, coords.z + 1.1)
 
-    exports['qb-target']:AddCircleZone(name, tmp_coord, 0.75, {
+    Target:AddCircleZone(name, tmp_coord, 0.75, {
         name = name,
         debugPoly = debugPoly,
         useZ = true
@@ -88,7 +89,7 @@ end
 function Targets.qb_target.barrel_withdraw(coords, name)
     local tmp_coord = vector3(coords.x, coords.y, coords.z + 1.1)
 
-    exports['qb-target']:AddCircleZone(name, tmp_coord, 1.0, {
+    Target:AddCircleZone(name, tmp_coord, 1.0, {
         name = name,
         debugPoly = debugPoly,
         useZ = true
@@ -103,7 +104,7 @@ function Targets.qb_target.barrel_withdraw(coords, name)
                 canInteract = function(entity)
                     if not CheckJob() then return false end
                     if not CheckOnduty() then
-                        QBCore.Functions.Notify('You must be on duty!', "error")
+                        Compat.Notify('You must be on duty!', "error")
                         Wait(2000)
                         return false
                     end
@@ -118,7 +119,7 @@ function Targets.qb_target.barrel_withdraw(coords, name)
                 canInteract = function(entity)
                     if not CheckJob() then return false end
                     if not CheckOnduty() then
-                        QBCore.Functions.Notify('You must be on duty!', "error")
+                        Compat.Notify('You must be on duty!', "error")
                         Wait(2000)
                         return false
                     end
@@ -133,7 +134,7 @@ function Targets.qb_target.barrel_withdraw(coords, name)
                 canInteract = function(entity)
                     if not CheckJob() then return false end
                     if not CheckOnduty() then
-                        QBCore.Functions.Notify('You must be on duty!', "error")
+                        Compat.Notify('You must be on duty!', "error")
                         Wait(2000)
                         return false
                     end
@@ -148,7 +149,7 @@ end
 function Targets.qb_target.blender(coords, name)
     local tmp_coord = vector3(coords.x, coords.y, coords.z + 2.5)
 
-    exports['qb-target']:AddCircleZone(name, tmp_coord, 3.5, {
+    Target:AddCircleZone(name, tmp_coord, 3.5, {
         name = name,
         debugPoly = debugPoly,
         useZ = true
@@ -162,7 +163,7 @@ function Targets.qb_target.blender(coords, name)
                 canInteract = function(entity)
                     if not CheckJob() then return false end
                     if not CheckOnduty() then
-                        QBCore.Functions.Notify('You must be on duty!', "error")
+                        Compat.Notify('You must be on duty!', "error")
                         Wait(2000)
                         return false
                     end
@@ -177,7 +178,7 @@ end
 function Targets.qb_target.crude_oil_transport(coords, name)
     local tmp_coord = vector3(coords.x, coords.y, coords.z + 2.5)
 
-    exports['qb-target']:AddCircleZone(name, tmp_coord, 2, {
+    Target:AddCircleZone(name, tmp_coord, 2, {
         name = name,
         debugPoly = debugPoly,
         useZ = true
@@ -191,7 +192,7 @@ function Targets.qb_target.crude_oil_transport(coords, name)
                 canInteract = function(entity)
                     if not CheckJob() then return false end
                     if not CheckOnduty() then
-                        QBCore.Functions.Notify('You must be on duty!', "error")
+                        Compat.Notify('You must be on duty!', "error")
                         Wait(2000)
                         return false
                     end
@@ -206,7 +207,7 @@ end
 function Targets.qb_target.oilwell(coords, name)
     local coord = vector3(coords.x, coords.y, coords.z + 2.5)
 
-    exports['qb-target']:AddCircleZone("oil-rig-" .. name, coord, 3.5, {
+    Target:AddCircleZone("oil-rig-" .. name, coord, 3.5, {
         name = "oil-rig-" .. name,
         debugPoly = true,
         useZ = true,
@@ -267,7 +268,7 @@ function Targets.qb_target.oilwell(coords, name)
 end
 
 function Targets.qb_target.truck(plate, truck)
-    exports['qb-target']:AddEntityZone("device-" .. plate, truck, {
+    Target:AddEntityZone("device-" .. plate, truck, {
         name = "device-" .. plate,
         debugPoly = false,
     }, {
